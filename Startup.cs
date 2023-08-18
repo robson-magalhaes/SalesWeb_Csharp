@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SellSnacks.Context;
+using SellSnacks.Models;
 using SellSnacks.Repositories;
 using SellSnacks.Repositories.Interfaces;
 
@@ -21,7 +22,12 @@ public class Startup
             options.UseSqlServer(Configuration.GetConnectionString("MinhaString")));
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped(x => CarrinhoCompra.GetCarrinho(x));
         services.AddControllersWithViews();
+
+        services.AddMemoryCache();
+        services.AddSession();
 
     }
 
@@ -42,7 +48,7 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
-
+        app.UseSession();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

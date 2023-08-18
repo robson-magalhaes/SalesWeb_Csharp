@@ -1,21 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SellSnacks.Models;
+using SellSnacks.Repositories.Interfaces;
+using SellSnacks.ViewModels;
 using System.Diagnostics;
 
 namespace SellSnacks.Controllers
 {
     public class HomeController : Controller
     {
-       
-        public IActionResult Index()
+        private readonly ILancheRepository _lancheRepository;
+
+        public HomeController(ILancheRepository lancheRepository)
         {
-            return View();
-        }
-        public IActionResult Demo()
-        {
-            return View();
+            _lancheRepository = lancheRepository;
         }
 
+        public IActionResult Index()
+        {
+            var homeViewModel = new HomeViewModel
+            {
+                LanchesPreferidos = _lancheRepository.LanchesPreferidos.ToList()
+            };
+            return View(homeViewModel);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

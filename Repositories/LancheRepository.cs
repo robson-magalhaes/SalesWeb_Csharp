@@ -2,6 +2,7 @@
 using SellSnacks.Context;
 using SellSnacks.Models;
 using SellSnacks.Repositories.Interfaces;
+using SQLitePCL;
 
 namespace SellSnacks.Repositories
 {
@@ -13,6 +14,7 @@ namespace SellSnacks.Repositories
         {
             _context = context;
         }
+
         public IEnumerable<Lanche> Lanches => _context.Lanches.Include(x => x.Categoria);
         public IEnumerable<Lanche> LanchesPreferidos => _context.Lanches.Where(x => x.IsLanchePreferido).Include(x => x.Categoria);
         public Lanche GetLancheById(int lancheId) => _context.Lanches.FirstOrDefault(x=>x.LancheId == lancheId);

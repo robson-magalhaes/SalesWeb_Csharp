@@ -19,7 +19,7 @@ namespace SellSnacks.Controllers
         {
             var homeViewModel = new HomeViewModel
             {
-                LanchesPreferidos = _lancheRepository.LanchesPreferidos.ToList()
+                LanchesPreferidos = _lancheRepository.LanchesPreferidos
             };
             return View(homeViewModel);
         }

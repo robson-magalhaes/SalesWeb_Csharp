@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using SellSnacks.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using SellSnacks.Context;
 using SellSnacks.Models;
 using SellSnacks.Repositories;
-using SellSnacks.Repositories.Interfaces;
 
 namespace SellSnacks;
 
@@ -22,6 +22,7 @@ public class Startup
             options.UseSqlServer(Configuration.GetConnectionString("MinhaString")));
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped(x => CarrinhoCompra.GetCarrinho(x));
         services.AddControllersWithViews();
@@ -54,8 +55,15 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
+                name: "categoria",
+                pattern:"Lanche/{action}/{categoria?}",
+                defaults: new {controller="Lanche", action="List"}
+                );
+
+            endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
         });
     }
 }

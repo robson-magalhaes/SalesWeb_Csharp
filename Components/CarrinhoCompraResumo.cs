@@ -2,7 +2,7 @@
 using SellSnacks.Models;
 using SellSnacks.ViewModels;
 
-namespace SellSnacks.Views.Shared.Components;
+namespace SellSnacks.Components;
 public class CarrinhoCompraResumo : ViewComponent
 {
     private readonly CarrinhoCompra _carrinhoCompra;
@@ -11,9 +11,14 @@ public class CarrinhoCompraResumo : ViewComponent
     {
         _carrinhoCompra = carrinhoCompra;
     }
+
     public IViewComponentResult Invoke()
     {
         var result = _carrinhoCompra.GetCarrinhoCompraItens();
+        //var result = new List<CarrinhoCompraItem> {
+        //     new CarrinhoCompraItem(),
+        //     new CarrinhoCompraItem()
+        //};
         _carrinhoCompra.CarrinhoCompraItens = result;
 
         var carrinho = new CarrinhoCompraViewModel

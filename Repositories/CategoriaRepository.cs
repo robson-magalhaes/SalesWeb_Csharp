@@ -8,11 +8,12 @@ namespace SellSnacks.Repositories
     {
         private readonly AppDbContext _context;
 
+        public IEnumerable<Categoria> Categorias => _context.Categorias;
+
         public CategoriaRepository(AppDbContext contexto)
         {
             _context = contexto;
         }
 
-        public IEnumerable<Categoria> Categorias => _context.Categorias;
     }
 }
